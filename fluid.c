@@ -208,8 +208,14 @@ void start_simulation()
 
     MPI_Request coords_req = MPI_REQUEST_NULL;
 
+    //TODO FIXME
+    //struct RGB_LIGHT_T rgb_state;
+    //initialize_rgb(&rgb_state);
+
     // Main simulation loop
     while(1) {
+        //TODO FIXME
+        //transfer(&rgb_state)
 
         // Initialize velocities
         apply_gravity(fluid_particle_pointers, &params);

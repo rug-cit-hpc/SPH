@@ -18,11 +18,13 @@ struct {
     uint32_t speed;
     uint16_t delay;
     int fd;
+    uint8_t color[3];
 } RGB_LIGHT_T;
 
-static void pabort(const char *s);
-static void transfer(int fd, uint8_t r_color, uint8_t g_color, uint8_t b_color);
-int initialize_rgb();
-void shutdown_rgb(int fd);
+void calculate_rgb(RGB_LIGHT_T *state);
+void pabort(const char *s);
+void transfer(RGB_LIGHT_T *state);
+int initialize_rgb(RGB_LIGHT_T *state);
+void shutdown_rgb(RGB_LIGHT_T *state);
 
 #endif

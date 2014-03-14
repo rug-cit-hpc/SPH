@@ -2,25 +2,25 @@
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 
-static void pabort(const char *s)
+void pabort(const char *s)
 {
   perror(s);
   abort();
 }
 
-//static const char *device = "/dev/spidev0.0";
-//static uint8_t mode = 0;
-//static uint8_t bits = 8;
-//static uint32_t speed = 500000;
-//static uint16_t delay = 0;
+void calculate_rgb(RGB_LIGHT_T *state, int n, int min, int max) {
+  float percent = ((max - min) / n )
+  2000 - 1000 / 1500
+  state->color[0] = (uint8_t) (percent * 128);
+  state->color[1] = (uint8_t) 0;
+  state->color[2] = (uint8_t) (128 - (percent * 128));
+}
 
-//int fd;
-
-static void transfer(RGB_LIGHT_T *state, uint8_t r_color, uint8_t g_color, uint8_t b_color)
+void transfer(RGB_LIGHT_T *state)
 {
   int ret;
   uint8_t tx[] = {
-    r_color, g_color, b_color,
+    state->color[0], state->color[1], state->color[2],
   };
   uint8_t rx[ARRAY_SIZE(tx)] = {0, };
   struct spi_ioc_transfer tr = {
@@ -41,6 +41,10 @@ static void transfer(RGB_LIGHT_T *state, uint8_t r_color, uint8_t g_color, uint8
 void initialize_rgb(RGB_LIGHT_T *state) {
   int ret = 0;
 
+  state->mode = 0;
+  state->bits = 8;
+  state->speed = 500000;
+  state->delay = 0;
   state->fd = open(state->device, O_RDWR);
   if (state->fd < 0)
     pabort("can't open device");
