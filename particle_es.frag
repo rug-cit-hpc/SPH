@@ -6,7 +6,7 @@ varying vec2 circle_center;
 uniform float radius_world;
 
 const vec3 light_intensity = vec3(0.8, 0.8, 0.8);
-const vec3 light_position = vec3(0.0, 0.0, 2.0);
+const vec3 light_position = vec3(0.5, 0.5, 0.8);
 
 void main() {
     // Convert from [0,1] to [-1, 1] coords
@@ -22,8 +22,7 @@ void main() {
         discard;
 
     // Calculate 3D normal
-    //vec3 normal = normalize( vec3(local_frag_coord, sqrt(1.0 - rad_squared)));
-    vec3 normal = normalize( vec3(local_frag_coord*local_frag_coord, 1.0 - rad_squared));
+    vec3 normal = normalize( vec3(local_frag_coord, sqrt(1.0 - rad_squared)));
 
     // GL world coordinates
     vec3 frag_position = (normal * radius_world) + vec3(circle_center, 0.0);

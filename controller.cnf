@@ -1,25 +1,4 @@
 [xboxdrv]
-ui-clear=true
-extra-devices=false
-extra-events=false
-silent=true
-deadzone=6000
-dpad-as-button=true
-trigger-as-button=true
-
-[autofire]
-du=150
-dd=150
-dl=150
-dr=150
-lt=5
-rt=5
-
-[ui-axismap]
-x2=BTN_BACK:BTN_FORWARD
-y2=BTN_LEFT:BTN_RIGHT
-x1=REL_X:15:20
-y1=REL_Y:15:20
 
 [ui-buttonmap]
 a=KEY_A
@@ -34,15 +13,5 @@ rb=KEY_PAGEUP
 [ui-buttonmap]
 lt=BTN_BACK
 rt=BTN_FORWARD
-
-[ui-buttonmap]
-dl=KEY_LEFT
-dr=KEY_RIGHT
-du=KEY_UP
-dd=KEY_DOWN
-
-[ui-buttonmap]
-back=KEY_TAB
-start=KEY_ESC
 
 # EOF #

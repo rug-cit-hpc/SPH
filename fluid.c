@@ -60,8 +60,8 @@ void start_simulation()
     params.tunable_params.sigma = 20.0f;
     params.tunable_params.beta = 2.0f;
     params.tunable_params.rest_density = 30.0f;
-    params.tunable_params.mover_width = 1.0f;
-    params.tunable_params.mover_height = 1.0f;
+    params.tunable_params.mover_width = 2.0f;
+    params.tunable_params.mover_height = 2.0f;
     params.tunable_params.mover_type = SPHERE_MOVER;
 
     // The number of particles used may differ slightly

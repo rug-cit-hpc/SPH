@@ -755,8 +755,8 @@ void add_partition(RENDER_T *render_state)
     float h = render_state->master_params[0].smoothing_radius;
 
     // If the last partition is too small we can't split it and another
-    if(length < 6*h)
-	return;
+//    if(length < 6*h)
+//	return;
 
     // Set end of added partition to current end location
     render_state->master_params[num_compute_procs_active].node_end_x = render_state->master_params[num_compute_procs_active-1].node_end_x;
