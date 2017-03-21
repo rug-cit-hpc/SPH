@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "controls.h"
 #include "exit_menu_gl.h"
 
+static float screen_scale = 1;
+
 void check_user_input(gl_t *state)
 {
     // Poll GLFW for key press or mouse input
@@ -65,7 +67,11 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         switch(key)
         { 
             case GLFW_KEY_ESCAPE:
-                toggle_quit_mode(render_state);              
+                #ifdef EXIT_SIMPLE
+                exit_now(render_state, window);
+                #else
+                toggle_quit_mode(render_state);
+                #endif        
 	        break;
             case GLFW_KEY_RIGHT:
                 increase_parameter(render_state);
@@ -121,9 +127,9 @@ static void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     set_activity_time(render_state);
 
     float new_x, new_y;
-    new_y = (render_state->screen_height - ypos); // Flip y = 0
-    new_y = new_y/(0.5*render_state->screen_height) - 1.0;
-    new_x = xpos/(0.5*render_state->screen_width) - 1.0;
+    new_y = (render_state->screen_height*screen_scale - ypos); // Flip y = 0
+    new_y = new_y/(0.5*render_state->screen_height*screen_scale) - 1.0;
+    new_x = xpos/(0.5*render_state->screen_width*screen_scale) - 1.0;
 
     set_mover_gl_center(render_state, new_x, new_y);
 }
@@ -171,8 +177,13 @@ void init_ogl(gl_t *state, render_t *render_state)
     GLFWvidmode *mode = (GLFWvidmode*)glfwGetVideoMode(glfwGetPrimaryMonitor());
     state->window = glfwCreateWindow(mode->width, mode->height, "SPH", glfwGetPrimaryMonitor(), NULL);
 
+    int window_width, window_height;
+    glfwGetWindowSize(state->window, &window_width, &window_height);
     glfwGetFramebufferSize(state->window, &state->screen_width, &state->screen_height);
     glViewport(0, 0, state->screen_width, state->screen_height);
+
+    // Retina screens don't have a 1 to 1 ratio 
+    screen_scale = window_width / (float)state->screen_width;
 
     if(!state->window)
 	exit(EXIT_FAILURE);
@@ -257,3 +268,8 @@ void exit_with_selected_program(render_t *render_state, GLFWwindow* window)
     }
 }
 
+// Exit without using program selector
+void exit_now(render_t *render_state, GLFWwindow* window) {
+  glfwSetWindowShouldClose(window, GL_TRUE);
+  render_state->return_value = 0;
+}
