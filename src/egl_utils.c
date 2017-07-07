@@ -275,6 +275,9 @@ void handle_key(gl_t *state, struct input_event *event)
             case BTN_FORWARD:
                 toggle_dividers(render_state);
                 break;
+            case KEY_D:
+                toggle_dividers(render_state);
+                break;
             case KEY_ESC:
                 toggle_pause(render_state);
                 break;
