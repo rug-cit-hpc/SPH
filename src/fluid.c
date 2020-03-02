@@ -99,7 +99,7 @@ void start_simulation()
     params.tunable_params.mover_height = 2.0f;
     params.tunable_params.mover_type = SPHERE_MOVER;
 
-    #ifdef RASPI
+    #ifdef SIMPLE
     int steps_per_frame = 1; // Number of steps to compute before updating render node
     #else
     int steps_per_frame = 4;
@@ -107,7 +107,7 @@ void start_simulation()
     #endif
 
     // The number of particles used may differ slightly
-    #ifdef RASPI
+    #ifdef SIMPLE
     params.number_fluid_particles_global = 1500;
     #else
     params.number_fluid_particles_global = 1500;
@@ -332,7 +332,7 @@ void start_simulation()
         // Not updating halo particles and hash after relax can be used to speed things up
         // Not updating these can cause unstable behavior
 
-        #ifndef RASPI
+        #ifndef SIMPLE
         // Exchange halo particles from relaxed positions
         startHaloExchange(fluid_particle_pointers,fluid_particles, &edges, &params);
         #endif
@@ -340,7 +340,7 @@ void start_simulation()
         // We can hash during exchange as the density is not needed
         hash_fluid(fluid_particle_pointers, &neighbor_grid, &params, false);
 
-        #ifndef RASPI
+        #ifndef SIMPLE
         // Finish asynch halo exchange
         finishHaloExchange(fluid_particle_pointers,fluid_particles, &edges, &params);
 
